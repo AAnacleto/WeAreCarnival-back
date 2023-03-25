@@ -28,12 +28,12 @@ public class Eventos implements Serializable {
     private Endereco endereco;
 
     @Lob
-    @Column(columnDefinition = "BLOB", nullable = false)
+    @Column(nullable = false) //não precisa de columnDefinition
     private byte[] imagem;
 
     @Column(nullable = false)
     private LocalDateTime data;
 
-    @Column()
+    @Column
     private boolean favoritos;
 }
