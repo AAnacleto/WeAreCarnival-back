@@ -16,4 +16,14 @@ public class UsuarioRepositoryImplement extends AbstractRepository<Usuario, Long
         }
     }
 
+    @Override
+    public Usuario findByEmail(String email) {
+        try {
+            return getEntityManager().createQuery("SELECT em FROM Usuario em WHERE em.email = '" + email +
+                    "'", Usuario.class).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
 }

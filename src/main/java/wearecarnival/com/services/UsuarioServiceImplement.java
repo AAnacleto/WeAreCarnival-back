@@ -45,4 +45,9 @@ public class UsuarioServiceImplement implements UsuarioService{
     public Usuario findByName(String nome) {
         return usuarioRepository.findByName(nome);
     }
+
+    @Override
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
 }

@@ -18,4 +18,6 @@ public interface UsuarioService {
     List<Usuario> findAll();
 
     Usuario findByName(String nome);
+
+    Usuario findByEmail(String email);
 }
