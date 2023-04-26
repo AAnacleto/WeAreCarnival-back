@@ -1,4 +1,4 @@
-package wearecarnival.com.contoller;
+package wearecarnival.com.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/wearecarnival/usuario")
+@RequestMapping("/wac/usuario")
 public class UsuarioController {
 
     @Autowired

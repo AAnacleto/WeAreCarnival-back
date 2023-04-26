@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import wearecarnival.com.models.Usuario;
 
 @Repository
-public class UsuarioRepositoryImplement extends AbstractRepository<Usuario, Long> implements UsuarioRepository {
+public class UsuarioRepositoryImplements extends AbstractRepository<Usuario, Long> implements UsuarioRepository {
     @Override
     public Usuario findByName(String nome) {
         try {

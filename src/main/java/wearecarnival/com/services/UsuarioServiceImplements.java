@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UsuarioServiceImplement implements UsuarioService{
+public class UsuarioServiceImplements implements UsuarioService{
 
     @Autowired
     private UsuarioRepository usuarioRepository;
