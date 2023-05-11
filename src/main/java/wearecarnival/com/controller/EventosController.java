@@ -111,11 +111,20 @@ public class EventosController {
     }
 
     @GetMapping(value = "/find/byDay/{dayOfWeek}",produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    public ResponseEntity<List<Eventos>> findByDay(@PathVariable(value = "dayOfWeek") int dayOfWeek) {
-        Map<HttpStatus, String> message = new HashMap<>();
+    public ResponseEntity<List<Eventos>>  findByDay(@PathVariable(value = "dayOfWeek") int dayOfWeek) {
         List<Eventos> base = new ArrayList<Eventos>();
         base = service.findByDay(dayOfWeek);
         return ResponseEntity.status(HttpStatus.OK).body(base);
+
+       /* if (base.isEmpty()) {
+            String errorMessage = "Erro no serviço!!";
+            EventosResponse response = new EventosResponse(null, errorMessage, HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        } else {
+            String successMessage = "Eventos encontrados!!";
+            EventosResponse response = new EventosResponse(base, successMessage, HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }*/
 
     }
 
