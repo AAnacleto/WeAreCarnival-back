@@ -13,10 +13,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Endereco implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
+    @GeneratedValue( strategy = GenerationType.AUTO )
     private UUID id;
 
     @Column(unique = true, nullable = false)
@@ -31,7 +32,7 @@ public class Endereco implements Serializable {
     @Column(unique = true, nullable = false)
     private String cidade;
 
-    @Column(unique = true, nullable = true)
+    @Column(unique = true)
     private String pontoReferencia;
 
 }

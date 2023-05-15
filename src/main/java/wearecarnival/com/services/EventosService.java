@@ -19,5 +19,6 @@ public interface EventosService {
 
     List<Eventos> findByFavorite(boolean valor);
 
+    Eventos findByName(String name);
     List<Eventos> findAll();
 }

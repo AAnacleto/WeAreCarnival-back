@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wearecarnival.com.models.Eventos;
-import wearecarnival.com.models.EventosResponse;
 import wearecarnival.com.services.EventosService;
 
 import java.util.HashMap;
@@ -27,29 +26,27 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-
 @RestController
 @AllArgsConstructor
-@RequestMapping("/eventos")
+@RequestMapping("/wearecarnival/eventos")
 public class EventosController {
 
     @Autowired
     private EventosService service;
 
     @PostMapping("/save")
-    public ResponseEntity<Object> save(@RequestBody Eventos eventos){
+    public ResponseEntity<Object> save(@RequestBody Eventos eventos) {
         Map<HttpStatus, String> message = new HashMap<>();
-        Eventos base = null;
-        base = service.findById(eventos.getId());
+        Eventos base = service.findByName(eventos.getNome());
 
         if(base != null){
-            if(base.getId().equals(eventos.getId())){
+            if(eventos.getData().getYear() == base.getData().getYear()) {
                 message.put(HttpStatus.CONFLICT, "Evento já cadastrado!");
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
             }
         }
 
-        if(eventos.getNome().isEmpty()) {
+        if (eventos.getNome().isEmpty()) {
             message.put(HttpStatus.CONFLICT, "Favor preencher o nome do evento!");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
@@ -63,7 +60,7 @@ public class EventosController {
     @PutMapping("/update")
     public ResponseEntity<Object> update(@RequestBody Eventos eventos) {
         Map<HttpStatus, String> message = new HashMap<>();
-        Eventos base = null;
+        Eventos base;
         base = service.findById(eventos.getId());
 
         if (base == null) {
@@ -71,7 +68,7 @@ public class EventosController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         }
 
-        if(eventos.getNome().isEmpty()) {
+        if (eventos.getNome().isEmpty()) {
             message.put(HttpStatus.CONFLICT, "Favor preencher o nome do Evento!");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
@@ -84,7 +81,7 @@ public class EventosController {
     @DeleteMapping("/delete/{idEvento}")
     public ResponseEntity<Object> deleteById(@PathVariable(value = "idEvento") UUID idEvento) {
         Map<HttpStatus, String> message = new HashMap<>();
-        Eventos base = null;
+        Eventos base;
         base = service.findById(idEvento);
 
         if (base == null) {
@@ -100,7 +97,7 @@ public class EventosController {
     @GetMapping("/find/byId/{idEvento}")
     public ResponseEntity<Object> findById(@PathVariable(value = "idEvento") UUID idEvento) {
         Map<HttpStatus, String> message = new HashMap<>();
-        Eventos base = null;
+        Eventos base;
 
         base = service.findById(idEvento);
         if (base == null) {
@@ -110,18 +107,18 @@ public class EventosController {
         return ResponseEntity.status(HttpStatus.OK).body(base);
     }
 
-    @GetMapping(value = "/find/byDay/{dayOfWeek}",produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    @GetMapping(value = "/find/byDay/{dayOfWeek}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<Eventos>> findByDay(@PathVariable(value = "dayOfWeek") int dayOfWeek) {
         Map<HttpStatus, String> message = new HashMap<>();
-        List<Eventos> base = new ArrayList<Eventos>();
+        List<Eventos> base = new ArrayList<>();
         base = service.findByDay(dayOfWeek);
         return ResponseEntity.status(HttpStatus.OK).body(base);
 
     }
 
-    @GetMapping(value = "/find/byFavorite/{valor}",produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE  })
+    @GetMapping(value = "/find/byFavorite/{valor}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<Eventos>> findByFavorite(@PathVariable(value = "valor") boolean valor) {
-        List<Eventos> base = new ArrayList<Eventos>();
+        List<Eventos> base = new ArrayList<>();
         base = service.findByFavorite(valor);
         return ResponseEntity.status(HttpStatus.OK).body(base);
 

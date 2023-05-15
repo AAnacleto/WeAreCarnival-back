@@ -1,5 +1,6 @@
 package wearecarnival.com.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,10 +21,10 @@ public class Eventos implements Serializable {
     @GeneratedValue( strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String nome;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
@@ -31,6 +32,7 @@ public class Eventos implements Serializable {
     @Column(nullable = false) //não precisa de columnDefinition
     private byte[] imagem;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss[.SSS][.SS][.S]")
     @Column(nullable = false)
     private LocalDateTime data;
 

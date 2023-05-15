@@ -11,13 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-@Transactional(readOnly = false)
+@Transactional
 public class EventosServiceImplements implements EventosService {
 
     @Autowired
     private EventosRepository repository;
 
     public Eventos save(Eventos eventos){
+
         return repository.save(eventos);
     }
 
@@ -44,6 +45,11 @@ public class EventosServiceImplements implements EventosService {
     @Override
     public List<Eventos> findByFavorite(boolean valor) {
         return repository.findByFavorite(valor);
+    }
+
+    @Override
+    public Eventos findByName(String name) {
+        return repository.findByName(name);
     }
 
     @Override

@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -15,12 +14,11 @@ import java.util.UUID;
 @Entity
 public class Usuario implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idUsuario;
+    private UUID id;
 
     @Column(unique = true, nullable = false)
     private String nome;

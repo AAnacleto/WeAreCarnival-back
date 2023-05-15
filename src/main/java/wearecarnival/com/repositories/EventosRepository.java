@@ -19,5 +19,7 @@ public interface EventosRepository {
 
     List<Eventos> findByFavorite(boolean valor);
 
+
+    Eventos findByName(String name);
     List<Eventos> findAll();
 }
