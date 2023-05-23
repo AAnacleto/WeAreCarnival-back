@@ -7,7 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Data
@@ -24,17 +25,30 @@ public class Eventos implements Serializable {
     @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false)
+    private String polo;
+
     @OneToOne
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+
+    @Column
+    private String nomeLocal;
 
     @Lob
     @Column(nullable = false) //não precisa de columnDefinition
     private byte[] imagem;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss[.SSS][.SS][.S]")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(nullable = false)
-    private LocalDateTime data;
+    private LocalDate data;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    @Column(nullable = false)
+    private LocalTime horarioSaida;
+
+    @Column(nullable = false)
+    private String diaSemana;
 
     @Column
     private boolean favoritos;
