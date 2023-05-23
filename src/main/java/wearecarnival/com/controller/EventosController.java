@@ -110,7 +110,7 @@ public class EventosController {
     @GetMapping(value = "/find/byDay/{dayOfWeek}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<Eventos>> findByDay(@PathVariable(value = "dayOfWeek") int dayOfWeek) {
         Map<HttpStatus, String> message = new HashMap<>();
-        List<Eventos> base = new ArrayList<>();
+        List<Eventos> base;
         base = service.findByDay(dayOfWeek);
         return ResponseEntity.status(HttpStatus.OK).body(base);
 
@@ -118,7 +118,7 @@ public class EventosController {
 
     @GetMapping(value = "/find/byFavorite/{valor}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<Eventos>> findByFavorite(@PathVariable(value = "valor") boolean valor) {
-        List<Eventos> base = new ArrayList<>();
+        List<Eventos> base;
         base = service.findByFavorite(valor);
         return ResponseEntity.status(HttpStatus.OK).body(base);
 

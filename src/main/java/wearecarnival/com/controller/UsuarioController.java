@@ -9,7 +9,9 @@ import wearecarnival.com.models.Usuario;
 import wearecarnival.com.services.UsuarioService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -40,5 +42,50 @@ public class UsuarioController {
         usuarioService.save(usuario);
         message.put(HttpStatus.CREATED, "Usuário criado com sucesso!");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "id")UUID idUsuario) {
+        Map<HttpStatus, String> message = new HashMap<>();
+        Usuario base;
+
+        base = usuarioService.findById(idUsuario);
+        if(base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Usuário não encontrado!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        usuarioService.delete(idUsuario);
+        message.put(HttpStatus.ACCEPTED, "Usuário deletado com sucesso!");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
+    }
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "id") UUID idUsuario) {
+        Map<HttpStatus, String> message = new HashMap<>();
+        Usuario base = usuarioService.findById(idUsuario);
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(base);
+    }
+
+    @GetMapping("/find/name/{nome}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "nome") String nome) {
+        Map<HttpStatus, String> message = new HashMap<>();
+        if (nome.isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Deve informar o nome do usuário para realizar a pesquisa!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        Usuario base = null;
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Usuario não encontrada!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(base);
+    }
+
+    @GetMapping("/find/all")
+    public ResponseEntity<List<Usuario>> listAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
     }
 }
