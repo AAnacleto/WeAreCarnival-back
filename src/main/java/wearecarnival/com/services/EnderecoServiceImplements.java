@@ -15,7 +15,6 @@ public class EnderecoServiceImplements implements EnderecoService{
 
     @Autowired
     private EnderecoRepository repository;
-
     @Override
     public Endereco save(Endereco endereco) {
         return repository.save(endereco);

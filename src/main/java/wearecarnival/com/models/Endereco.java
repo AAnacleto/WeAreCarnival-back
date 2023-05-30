@@ -17,22 +17,22 @@ public class Endereco implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String nomeRua;
 
-    @Column(unique = true, nullable = false)
+    @Column
     private String numero;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String bairro;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String cidade;
 
-    @Column(unique = true)
+    @Column
     private String pontoReferencia;
 
 }

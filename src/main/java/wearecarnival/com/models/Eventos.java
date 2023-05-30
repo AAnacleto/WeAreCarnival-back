@@ -39,11 +39,11 @@ public class Eventos implements Serializable {
     @Column(nullable = false) //não precisa de columnDefinition
     private byte[] imagem;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private LocalDate data;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     @Column(nullable = false)
     private LocalTime horarioSaida;
 
