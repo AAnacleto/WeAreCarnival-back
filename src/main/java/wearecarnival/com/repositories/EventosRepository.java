@@ -21,5 +21,6 @@ public interface EventosRepository {
 
 
     Eventos findByName(String name);
+    List<Eventos> findByCity(String nomeCidade);
     List<Eventos> findAll();
 }

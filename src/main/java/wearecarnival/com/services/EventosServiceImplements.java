@@ -1,7 +1,9 @@
 package wearecarnival.com.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import wearecarnival.com.models.Endereco;
 import wearecarnival.com.models.Eventos;
+import wearecarnival.com.repositories.EnderecoRepository;
 import wearecarnival.com.repositories.EventosRepository;
 
 import java.util.List;
@@ -16,14 +18,19 @@ public class EventosServiceImplements implements EventosService {
 
     @Autowired
     private EventosRepository repository;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     public Eventos save(Eventos eventos){
-
+        Endereco endereco = eventos.getEndereco();
+        eventos.setEndereco(enderecoRepository.save(endereco));
         return repository.save(eventos);
     }
 
     @Override
     public Eventos update(Eventos eventos) {
+        Endereco endereco = eventos.getEndereco();
+        eventos.setEndereco(enderecoRepository.update(endereco));
         return repository.update(eventos);
     }
 
@@ -51,6 +58,9 @@ public class EventosServiceImplements implements EventosService {
     public Eventos findByName(String name) {
         return repository.findByName(name);
     }
+
+    @Override
+    public List<Eventos> findByCity(String nomeCidade) {return repository.findByCity(nomeCidade);}
 
     @Override
     public List<Eventos> findAll() {

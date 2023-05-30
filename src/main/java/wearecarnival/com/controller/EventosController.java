@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.List;
-import java.util.ArrayList;
 
 
 @RestController
@@ -109,7 +108,6 @@ public class EventosController {
 
     @GetMapping(value = "/find/byDay/{dayOfWeek}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<Eventos>> findByDay(@PathVariable(value = "dayOfWeek") int dayOfWeek) {
-        Map<HttpStatus, String> message = new HashMap<>();
         List<Eventos> base;
         base = service.findByDay(dayOfWeek);
         return ResponseEntity.status(HttpStatus.OK).body(base);
@@ -122,6 +120,14 @@ public class EventosController {
         base = service.findByFavorite(valor);
         return ResponseEntity.status(HttpStatus.OK).body(base);
 
+    }
+
+    @GetMapping(value = "/find/byCity/{nomeCidade}")
+    public ResponseEntity<Object> findByCity(@PathVariable(value = "nomeCidade") String nomeCidade) {
+        List<Eventos> base;
+        base = service.findByCity(nomeCidade);
+
+        return ResponseEntity.status(HttpStatus.OK).body(base);
     }
 
 

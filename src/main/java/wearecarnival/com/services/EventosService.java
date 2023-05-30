@@ -20,5 +20,7 @@ public interface EventosService {
     List<Eventos> findByFavorite(boolean valor);
 
     Eventos findByName(String name);
+
+    List<Eventos> findByCity(String nomeCidade);
     List<Eventos> findAll();
 }
