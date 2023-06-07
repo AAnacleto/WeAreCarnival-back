@@ -30,7 +30,7 @@ public class UsuarioController {
         if(base != null) {
             if(base.getEmail().equals(usuario.getEmail())) {
                 message.put(HttpStatus.CONFLICT, "Usuário já cadastrado");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
             }
         }
 
@@ -69,10 +69,10 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(base);
     }
 
-    @GetMapping("/find/name/{nome}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "nome") String nome) {
+    @GetMapping("/find/email/{email}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "email") String email) {
         Map<HttpStatus, String> message = new HashMap<>();
-        if (nome.isEmpty()) {
+        if (email.isEmpty()) {
             message.put(HttpStatus.CONFLICT, "Deve informar o nome do usuário para realizar a pesquisa!");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }

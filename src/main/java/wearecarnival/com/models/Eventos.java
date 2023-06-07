@@ -35,9 +35,12 @@ public class Eventos implements Serializable {
     @Column
     private String nomeLocal;
 
-    @Lob
-    @Column(nullable = false) //não precisa de columnDefinition
-    private byte[] imagem;
+    @OneToOne
+    @JoinColumn
+    private Imagem imagem;
+//    @Lob
+//    @Column(nullable = false) //não precisa de columnDefinition
+//    private byte[] imagem;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(nullable = false)

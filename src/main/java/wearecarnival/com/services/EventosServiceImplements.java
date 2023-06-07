@@ -3,6 +3,7 @@ package wearecarnival.com.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import wearecarnival.com.models.Endereco;
 import wearecarnival.com.models.Eventos;
+import wearecarnival.com.models.Imagem;
 import wearecarnival.com.repositories.EnderecoRepository;
 import wearecarnival.com.repositories.EventosRepository;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wearecarnival.com.repositories.ImagemRepository;
 
 
 @Service
@@ -21,9 +23,15 @@ public class EventosServiceImplements implements EventosService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Autowired
+    private ImagemRepository imagemRepository;
+
+
     public Eventos save(Eventos eventos){
+        Imagem imagem = eventos.getImagem();
         Endereco endereco = eventos.getEndereco();
         eventos.setEndereco(enderecoRepository.save(endereco));
+        eventos.setImagem(imagemRepository.save(imagem));
         return repository.save(eventos);
     }
 
