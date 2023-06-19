@@ -54,4 +54,7 @@ public class Eventos implements Serializable {
 
     @Column(nullable = false)
     private String categoria;
+
+    @Column
+    private Integer diaInt;
 }

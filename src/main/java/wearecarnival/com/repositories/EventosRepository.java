@@ -26,6 +26,6 @@ public interface EventosRepository {
 
     List<Eventos> findByCategory(String categoria);
 
-    List<Eventos> procurarEventosPorDiaECidade(String dia, String cidade);
+    List<Eventos> procurarEventosPorDiaECidade(Integer diaInt, String cidade);
     List<Eventos> findAll();
 }

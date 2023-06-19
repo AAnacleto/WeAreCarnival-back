@@ -71,17 +71,17 @@ public class EventosRepositoryImplements extends AbstractRepository<Eventos, Lon
     public List<Eventos> findByCategory(String categoria) {
         try {
             return getEntityManager().createQuery("SELECT e FROM Eventos e WHERE e.categoria = :categoria", Eventos.class)
-                    .setParameter("category", categoria)
+                    .setParameter("categoria", categoria)
                     .getResultList();
         } catch (NoResultException e) {
             return null;
         }
     }
     @Override
-    public List<Eventos> procurarEventosPorDiaECidade(String dia, String cidade) {
-        String jpql = "SELECT e FROM Eventos e WHERE e.diaSemana = :dia AND e.endereco.cidade = :cidade";
+    public List<Eventos> procurarEventosPorDiaECidade(Integer diaInt, String cidade) {
+        String jpql = "SELECT e FROM Eventos e JOIN e.endereco endereco WHERE endereco.cidade = :cidade AND e.diaInt = :diaInt";
         return getEntityManager().createQuery(jpql, Eventos.class)
-                .setParameter("dia", dia)
+                .setParameter("diaInt", diaInt)
                 .setParameter("cidade", cidade)
                 .getResultList();
     }

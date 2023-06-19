@@ -65,7 +65,7 @@ public class EventosServiceImplements implements EventosService {
     public List<Eventos> findByCategory(String categoria) {return repository.findByCategory(categoria); }
     @Override
     public List<Eventos> findByCity(String nomeCidade) {return repository.findByCity(nomeCidade);}
-    public List<Eventos> procurarEventosPorDiaECidade(String dia, String cidade) { return repository.procurarEventosPorDiaECidade(dia, cidade); }
+    public List<Eventos> procurarEventosPorDiaECidade(Integer diaInt, String cidade) { return repository.procurarEventosPorDiaECidade(diaInt, cidade); }
     @Override
     public List<Eventos> findAll() {
         return repository.findAll();

@@ -163,9 +163,9 @@ public class EventosController {
         return ResponseEntity.status(HttpStatus.OK).body(base);
     }
 
-    @GetMapping("/find/cityDay/")
+    @GetMapping("/find/cityDay/?dia={dia}&cidade={cidade}")
     public ResponseEntity<List<Eventos>> buscarEventosPorDiaECidade(
-            @RequestParam("dia") String dia,
+            @RequestParam("dia") Integer dia,
             @RequestParam("cidade") String cidade
     ) {
         List<Eventos> eventos = service.procurarEventosPorDiaECidade(dia, cidade);
