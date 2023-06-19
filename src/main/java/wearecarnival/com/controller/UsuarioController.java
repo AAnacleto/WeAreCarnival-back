@@ -68,7 +68,16 @@ public class UsuarioController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(base);
     }
-
+    @GetMapping("/find/{email}")
+    public ResponseEntity<Object> findByEmail(@PathVariable(value = "email") String email) {
+        Map<HttpStatus, String> message = new HashMap<>();
+        Usuario base = usuarioService.findByEmail(email);
+        if(base.getEmail().equals(email)) {
+            message.put(HttpStatus.CONFLICT, "Email existente");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(base);
+    }
     @GetMapping("/find/name/{nome}")
     public ResponseEntity<Object> findById(@PathVariable(value = "nome") String nome) {
         Map<HttpStatus, String> message = new HashMap<>();

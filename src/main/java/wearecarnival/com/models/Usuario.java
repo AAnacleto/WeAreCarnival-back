@@ -18,7 +18,7 @@ public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private UUID idUsuario;
 
     @Column(unique = true, nullable = false)
     private String nome;
@@ -28,5 +28,4 @@ public class Usuario implements Serializable {
 
     @Column(unique = true, nullable = false)
     private String senha;
-
 }

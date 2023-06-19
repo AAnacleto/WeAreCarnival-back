@@ -6,23 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wearecarnival.com.models.Eventos;
 import wearecarnival.com.services.EventosService;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.List;
 
 
 @RestController
@@ -50,13 +43,33 @@ public class EventosController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
 
+//        try {
+//            if(UploadImage.fazerUploadImagem(imagem)) {
+//                eventos.setImagem(imagem.getOriginalFilename());
+//            }
+//        } catch (Exception e) {
+//            e.getMessage();
+//        }
+
         service.save(eventos);
         message.put(HttpStatus.CREATED, "Evento cadastrado com sucesso!");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
 
     }
 
-    @PutMapping("/update")
+    @GetMapping("/imagem")
+    public byte[] getImagem(@RequestParam("imagem") String imagem) {
+        File imagemArquio = new File("src/main/resources/static/images/img-evento/" + imagem);
+        try {
+            return Files.readAllBytes(imagemArquio.toPath());
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+
+
+    @PutMapping("/update/{idEvento}")
     public ResponseEntity<Object> update(@RequestBody Eventos eventos) {
         Map<HttpStatus, String> message = new HashMap<>();
         Eventos base;
@@ -107,7 +120,7 @@ public class EventosController {
     }
 
     @GetMapping(value = "/find/byDay/{dayOfWeek}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<List<Eventos>> findByDay(@PathVariable(value = "dayOfWeek") int dayOfWeek) {
+    public ResponseEntity<List<Eventos>> findByDay(@PathVariable(value = "dayOfWeek") String dayOfWeek) {
         List<Eventos> base;
         base = service.findByDay(dayOfWeek);
         return ResponseEntity.status(HttpStatus.OK).body(base);
@@ -121,13 +134,45 @@ public class EventosController {
         return ResponseEntity.status(HttpStatus.OK).body(base);
 
     }
+    @GetMapping(value = "/find/{nome}")
+    public ResponseEntity<Object> findByName(@PathVariable(value = "nome") String nome) {
+        Eventos  base;
+        base = service.findByName(nome);
+        return ResponseEntity.status(HttpStatus.OK).body(base);
+    }
 
+    @GetMapping(value = "/find/byEventoNome/{nome}")
+    public ResponseEntity<Object> findByEventName(@PathVariable(value = "nome") String nome) {
+        List<Eventos> base;
+        base = service.findByEventName(nome);
+        return ResponseEntity.status(HttpStatus.OK).body(base);
+    }
     @GetMapping(value = "/find/byCity/{nomeCidade}")
     public ResponseEntity<Object> findByCity(@PathVariable(value = "nomeCidade") String nomeCidade) {
         List<Eventos> base;
         base = service.findByCity(nomeCidade);
 
         return ResponseEntity.status(HttpStatus.OK).body(base);
+    }
+
+    @GetMapping(value = "/find/byCategory/{categoria}")
+    public ResponseEntity<Object> findByCategory(@PathVariable(value = "categoria") String categoria) {
+        List<Eventos> base;
+        base = service.findByCategory(categoria);
+
+        return ResponseEntity.status(HttpStatus.OK).body(base);
+    }
+
+    @GetMapping("/find/cityDay/")
+    public ResponseEntity<List<Eventos>> buscarEventosPorDiaECidade(
+            @RequestParam("dia") String dia,
+            @RequestParam("cidade") String cidade
+    ) {
+        List<Eventos> eventos = service.procurarEventosPorDiaECidade(dia, cidade);
+        if (eventos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(eventos);
     }
 
 

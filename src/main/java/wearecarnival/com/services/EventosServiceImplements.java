@@ -1,6 +1,8 @@
 package wearecarnival.com.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import wearecarnival.com.models.Endereco;
 import wearecarnival.com.models.Eventos;
 import wearecarnival.com.repositories.EnderecoRepository;
@@ -8,8 +10,6 @@ import wearecarnival.com.repositories.EventosRepository;
 
 import java.util.List;
 import java.util.UUID;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -45,7 +45,7 @@ public class EventosServiceImplements implements EventosService {
     }
 
     @Override
-    public List<Eventos>findByDay(int dayOfWeek) {
+    public List<Eventos>findByDay(String dayOfWeek) {
         return repository.findByDay(dayOfWeek);
     }
 
@@ -55,13 +55,17 @@ public class EventosServiceImplements implements EventosService {
     }
 
     @Override
+    public List<Eventos> findByEventName(String nome) { return repository.findByEventName(nome); }
+    @Override
     public Eventos findByName(String name) {
         return repository.findByName(name);
     }
 
     @Override
+    public List<Eventos> findByCategory(String categoria) {return repository.findByCategory(categoria); }
+    @Override
     public List<Eventos> findByCity(String nomeCidade) {return repository.findByCity(nomeCidade);}
-
+    public List<Eventos> procurarEventosPorDiaECidade(String dia, String cidade) { return repository.procurarEventosPorDiaECidade(dia, cidade); }
     @Override
     public List<Eventos> findAll() {
         return repository.findAll();

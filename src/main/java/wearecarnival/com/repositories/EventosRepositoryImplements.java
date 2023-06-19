@@ -11,7 +11,7 @@ import java.util.List;
 public class EventosRepositoryImplements extends AbstractRepository<Eventos, Long> implements EventosRepository {
 
     @Override
-    public List<Eventos> findByDay(int dayOfWeek) {
+    public List<Eventos> findByDay(String dayOfWeek) {
         try {
             return getEntityManager()
                     .createQuery("SELECT e FROM Eventos e WHERE e.data = :dayOfWeek", Eventos.class)
@@ -34,11 +34,21 @@ public class EventosRepositoryImplements extends AbstractRepository<Eventos, Lon
             return null;
         }
     }
+    @Override
+    public List<Eventos> findByEventName(String nome) {
+        try {
+            return getEntityManager().createQuery("select e FROM Eventos e WHERE e.nome LIKE CONCAT('%', :nome, '%')", Eventos.class)
+                    .setParameter("nome", nome)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 
     @Override
-    public Eventos findByName(String name) {
+    public Eventos findByName(String nome) {
         try {
-            return getEntityManager().createQuery("select e FROM Eventos e WHERE e.nome = '" + name +
+            return getEntityManager().createQuery("select e FROM Eventos e WHERE e.nome = '" + nome +
                     "'", Eventos.class).getSingleResult();
         } catch (NoResultException e) {
             return null;
@@ -48,12 +58,32 @@ public class EventosRepositoryImplements extends AbstractRepository<Eventos, Lon
     @Override
     public List<Eventos> findByCity(String cidade) {
         try {
-            return getEntityManager().createQuery(
-                    "SELECT e FROM Eventos e JOIN e.endereco end WHERE end.cidade = :cidade", Eventos.class)
+            return getEntityManager()
+                    .createQuery("SELECT e FROM Eventos e JOIN e.endereco end WHERE end.cidade = :cidade", Eventos.class)
                     .setParameter("cidade", cidade)
                     .getResultList();
         } catch (NoResultException e) {
             return null;
         }
     }
+
+    @Override
+    public List<Eventos> findByCategory(String categoria) {
+        try {
+            return getEntityManager().createQuery("SELECT e FROM Eventos e WHERE e.categoria = :categoria", Eventos.class)
+                    .setParameter("category", categoria)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    @Override
+    public List<Eventos> procurarEventosPorDiaECidade(String dia, String cidade) {
+        String jpql = "SELECT e FROM Eventos e WHERE e.diaSemana = :dia AND e.endereco.cidade = :cidade";
+        return getEntityManager().createQuery(jpql, Eventos.class)
+                .setParameter("dia", dia)
+                .setParameter("cidade", cidade)
+                .getResultList();
+    }
 }
+

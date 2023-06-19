@@ -15,12 +15,14 @@ public interface EventosService {
 
     Eventos findById(UUID id);
 
-    List<Eventos> findByDay(int dayOfWeek);
+    List<Eventos> findByDay(String dayOfWeek);
 
     List<Eventos> findByFavorite(boolean valor);
-
+    List<Eventos> findByEventName(String nome);
+    List<Eventos> findByCategory(String categoria);
     Eventos findByName(String name);
 
     List<Eventos> findByCity(String nomeCidade);
+    List<Eventos> procurarEventosPorDiaECidade(String dia, String cidade);
     List<Eventos> findAll();
 }

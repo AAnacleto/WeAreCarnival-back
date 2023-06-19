@@ -35,9 +35,8 @@ public class Eventos implements Serializable {
     @Column
     private String nomeLocal;
 
-    @Lob
     @Column(nullable = false) //não precisa de columnDefinition
-    private byte[] imagem;
+    private String imagem;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(nullable = false)
@@ -52,4 +51,7 @@ public class Eventos implements Serializable {
 
     @Column
     private boolean favoritos;
+
+    @Column(nullable = false)
+    private String categoria;
 }
