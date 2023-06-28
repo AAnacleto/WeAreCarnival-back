@@ -28,7 +28,7 @@ public class EventosServiceImplements implements EventosService {
     }
 
     @Override
-    public Eventos update(Eventos eventos) {
+    public Eventos update(UUID id, Eventos eventos) {
         Endereco endereco = eventos.getEndereco();
         eventos.setEndereco(enderecoRepository.update(endereco));
         return repository.update(eventos);
@@ -70,4 +70,7 @@ public class EventosServiceImplements implements EventosService {
     public List<Eventos> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public List<Eventos> buscarDiaInt(Integer diaInt) {return repository.buscarDiaInt(diaInt);}
 }

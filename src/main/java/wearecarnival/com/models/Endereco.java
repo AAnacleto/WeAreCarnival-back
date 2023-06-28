@@ -35,4 +35,7 @@ public class Endereco implements Serializable {
     @Column
     private String pontoReferencia;
 
+    @Column
+    private String cep;
+
 }

@@ -85,5 +85,15 @@ public class EventosRepositoryImplements extends AbstractRepository<Eventos, Lon
                 .setParameter("cidade", cidade)
                 .getResultList();
     }
+    @Override
+    public List<Eventos> buscarDiaInt(Integer diaInt) {
+        try {
+            return getEntityManager().createQuery("SELECT e FROM Eventos e WHERE e.diaInt = :diaInt", Eventos.class)
+                    .setParameter("diaInt", diaInt)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }
 

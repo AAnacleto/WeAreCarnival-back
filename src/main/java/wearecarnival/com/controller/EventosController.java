@@ -70,7 +70,7 @@ public class EventosController {
 
 
     @PutMapping("/update/{idEvento}")
-    public ResponseEntity<Object> update(@RequestBody Eventos eventos) {
+    public ResponseEntity<Object> update(@PathVariable(value = "id") UUID id , @RequestBody Eventos eventos) {
         Map<HttpStatus, String> message = new HashMap<>();
         Eventos base;
         base = service.findById(eventos.getId());
@@ -85,10 +85,11 @@ public class EventosController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
 
-        service.update(eventos);
+        service.update(id, eventos);
         message.put(HttpStatus.ACCEPTED, "Evento alterado com sucesso!");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
     }
+
 
     @DeleteMapping("/delete/{idEvento}")
     public ResponseEntity<Object> deleteById(@PathVariable(value = "idEvento") UUID idEvento) {
@@ -179,6 +180,13 @@ public class EventosController {
     @GetMapping("/find/all")
     public ResponseEntity<List<Eventos>> listAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
+    }
+
+    @GetMapping("/find/intDay/{diaInt}")
+    public ResponseEntity<List<Eventos>> buscarDiaInt(@PathVariable(value = "diaInt") Integer diaInt) {
+       List<Eventos> base = service.buscarDiaInt(diaInt);
+
+       return ResponseEntity.status(HttpStatus.OK).body(base);
     }
 
 

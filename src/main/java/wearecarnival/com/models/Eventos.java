@@ -57,4 +57,9 @@ public class Eventos implements Serializable {
 
     @Column
     private Integer diaInt;
+
+    @Column
+    private String descricao;
+
+
 }

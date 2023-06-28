@@ -28,4 +28,6 @@ public interface EventosRepository {
 
     List<Eventos> procurarEventosPorDiaECidade(Integer diaInt, String cidade);
     List<Eventos> findAll();
+
+    List<Eventos> buscarDiaInt(Integer diaInt);
 }

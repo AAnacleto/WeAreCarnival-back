@@ -9,7 +9,7 @@ public interface EventosService {
 
     Eventos save(Eventos eventos);
 
-    Eventos update(Eventos eventos);
+    Eventos update(UUID id, Eventos eventos);
 
     void delete(UUID id);
 
@@ -25,4 +25,6 @@ public interface EventosService {
     List<Eventos> findByCity(String nomeCidade);
     List<Eventos> procurarEventosPorDiaECidade(Integer diaInt, String cidade);
     List<Eventos> findAll();
+
+    List<Eventos> buscarDiaInt(Integer diaInt);
 }
